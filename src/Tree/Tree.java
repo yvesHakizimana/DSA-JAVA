@@ -1,5 +1,8 @@
 package Tree;
 
+
+import java.util.ArrayList;
+
 public class Tree {
     private class Node{
         int data;
@@ -19,6 +22,7 @@ public class Tree {
     }
 
     private Node root;
+    private ArrayList<Integer> numbers = new ArrayList<>();
 
     public Tree(){
         this.root = null;
@@ -72,13 +76,17 @@ public class Tree {
         return false;
     }
 
+    public Node getRoot() {
+        return root;
+    }
+
     public void traversePreOrder(){
         traversePreOrder(root);
     }
 
-    public void traverseInOrder(){
-        traverseInOrder(root);
-    }
+//    public void traverseInOrder(){
+//        traverseInOrder(root);
+//    }
 
     public void traversePostOrder(){
         traversePostOrder(root);
@@ -88,7 +96,7 @@ public class Tree {
         return height(root);
     }
     public int min(){
-        return minValue(root);
+        return leftMost(root);
     }
 
     public int max(){
@@ -119,7 +127,7 @@ public class Tree {
     private int height(Node root){
         if(root == null)
             return -1;
-        if(root.leftChild == null && root.rightChild == null)
+        if(isLeaf(root))
             return 0;
         return 1 + Math.max(height(root.leftChild), height(root.rightChild));
     }
@@ -162,4 +170,22 @@ public class Tree {
         }
         return last.data;
     }
+
+    public boolean equals(Tree other){
+        return  equals(root, other.root);
+    }
+
+    private boolean equals(Node first, Node last){
+        if(first == null && last == null)
+            return  true;
+        if(first != null && last != null){
+            return (first.data == last.data &&
+                    equals(first.leftChild, last.leftChild) &&
+                    equals(first.rightChild, last.rightChild));
+        }
+        return  false;
+    }
+
+
+
 }
