@@ -83,6 +83,10 @@ public class Tree {
     public void traversePostOrder(){
         traversePostOrder(root);
     }
+
+    public int height(){
+        return height(root);
+    }
     // Pre-order means root, left , child
     private void traversePreOrder(Node root){
         if(root == null) return;
@@ -103,5 +107,14 @@ public class Tree {
         traversePostOrder(root.leftChild);
         traversePostOrder(root.rightChild);
         System.out.println(root.data);
+    }
+
+    private int height(Node root){
+        if(root == null)
+            return -1;
+        if(root.leftChild == null && root.rightChild == null)
+            return 0;
+        assert root.leftChild != null;
+        return 1 + Math.max(height(root.leftChild), height(root.rightChild));
     }
 }
