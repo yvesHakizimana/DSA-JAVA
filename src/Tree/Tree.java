@@ -87,6 +87,13 @@ public class Tree {
     public int height(){
         return height(root);
     }
+    public int min(){
+        return minValue(root);
+    }
+
+    public int max(){
+        return rightMost(root);
+    }
     // Pre-order means root, left , child
     private void traversePreOrder(Node root){
         if(root == null) return;
@@ -114,7 +121,45 @@ public class Tree {
             return -1;
         if(root.leftChild == null && root.rightChild == null)
             return 0;
-        assert root.leftChild != null;
         return 1 + Math.max(height(root.leftChild), height(root.rightChild));
+    }
+
+    private boolean isLeaf(Node node){
+        return node.leftChild == null && node.rightChild == null;
+    }
+
+    private int minValue(Node root){
+        if(this.root == null)
+            throw  new IllegalArgumentException("No nodes in this tree.");
+        if(isLeaf(root))
+            return root.data;
+        var left = minValue(root.leftChild);
+        var right = minValue(root.rightChild);
+        return Math.min(Math.min(left, right), root.data);
+    }
+
+    private int leftMost(Node root){
+        if(root == null)
+            throw  new IllegalArgumentException("No Node in this tree.");
+        var current = root;
+        Node leftmost = null;
+        while(current != null){
+            leftmost = current;
+            current = current.leftChild;
+        }
+        return leftmost.data;
+    }
+
+    private int rightMost(Node root){
+        if(root == null){
+            throw  new IllegalArgumentException("There is no node in the tree.");
+        }
+        var current = root;
+        Node last = null;
+        while(current != null){
+            last = current;
+            current = current.rightChild;
+        }
+        return last.data;
     }
 }
